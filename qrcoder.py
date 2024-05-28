@@ -1,8 +1,9 @@
 import segno
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from sys import argv
 
 qrcodefiles = {}
+qr_image_size = 600
 
 for argument in argv[1:]:
     qrcounter = 0
@@ -17,10 +18,15 @@ for qrcodefile in qrcodefiles:
     imagecoordinates = [0,0]
     pageno = 0
     qrcodecodegroupimage = None 
-    #draw = ImageDraw.Draw(qrcodecodegroupimage)
     for qrcode in qrcodefiles[qrcodefile]:
-        qrcode_IMG = segno.make_qr(qrcode[0], error='H').to_pil(scale = 15, border = 15)
-        qrcode_IMG = qrcode_IMG.resize([825,825], resample = Image.NEAREST)
+        qrcode_IMG = segno.make_qr(qrcode[0], error='H').to_pil(scale = 15, border = 10)
+        qrcode_IMG = qrcode_IMG.resize([qr_image_size,qr_image_size], resample = Image.NEAREST)
+        draw = ImageDraw.Draw(qrcode_IMG)
+        font = ImageFont.truetype(".\\fonts\\FONT.otf", 40)
+        textsize1 = draw.textbbox([0, 0],qrcode[1],font=font, align='center')
+        textsize2 = draw.textbbox([0, 0],qrcode[2],font=font, align='center')
+        draw.text([(qr_image_size-textsize1[2])/2,textsize1[3]+0.08*qr_image_size], qrcode[1], align='center',font=font)
+        draw.text([(qr_image_size-textsize2[2])/2,textsize2[3]+0.76*qr_image_size], qrcode[2], align='center',font=font)
         print(imagecoordinates)
         if qrcodecodegroupimage == None:
             qrcodecount = len(qrcodefiles[qrcodefile])
