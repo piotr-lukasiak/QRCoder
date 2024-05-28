@@ -1,2 +1,5 @@
 TestTXT.txt
 TestCSV.csv
+dist
+build
+qrcoder.spec
