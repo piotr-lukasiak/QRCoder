@@ -1,5 +1,4 @@
-TestTXT.txt
-TestCSV.csv
+Test*
 dist
 build
 qrcoder.spec
