@@ -16,7 +16,7 @@ for argument in argv[1:]:
 for qrcodefile in qrcodefiles:
     imno = 0
     for qrcode in qrcodefiles[qrcodefile]:
-        qrcode_IMG = write_pil(make_qr(qrcode[0], error='H'),scale = 15, border = 10)
+        qrcode_IMG = write_pil(make_qr(qrcode[0].strip("\""), error='H'),scale = 15, border = 10)
         qrcode_IMG = qrcode_IMG.resize([qr_image_size,qr_image_size], resample = Image.NEAREST)
         draw = ImageDraw.Draw(qrcode_IMG)
         font = ImageFont.truetype(".\\fonts\\FONT.otf", 40)
@@ -26,8 +26,6 @@ for qrcodefile in qrcodefiles:
         draw.text([(qr_image_size-textsize2[2])/2,textsize2[3]+0.76*qr_image_size], qrcode[2], align='center',font=font)
         qrcode_IMG.save(qrcodefile+str(imno) + ".png")
         imno += 1
-
-
 
 
 

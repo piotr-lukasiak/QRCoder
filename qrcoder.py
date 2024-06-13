@@ -12,13 +12,13 @@ for argument in argv[1:]:
     filename = file.name[0:-4]
     qrcodefiles[filename] = [str(x).strip().split(",") for x in file.readlines()]
     file.close()
-
+print(qrcodefiles)
 for qrcodefile in qrcodefiles:
     imagecoordinates = [0,0]
     pageno = 0
     qrcodecodegroupimage = None 
     for qrcode in qrcodefiles[qrcodefile]:
-        qrcode_IMG = write_pil(make_qr(qrcode[0], error='H'),scale = 15, border = 10)
+        qrcode_IMG = write_pil(make_qr(qrcode[0].strip("\""), error='H'),scale = 15, border = 10)
         qrcode_IMG = qrcode_IMG.resize([qr_image_size,qr_image_size], resample = Image.NEAREST)
         draw = ImageDraw.Draw(qrcode_IMG)
         draw.ellipse([595,595,605,605],fill='Black')
